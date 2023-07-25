@@ -7,12 +7,14 @@ namespace Eticaret.Model
     {
         public int Id { get; set; }
         public string Ad { get; set; }
-        public int UstKategoriId { get; set; }
+        public int? UstKategoriId { get; set; }
         public int Sira { get; set; }
-        public string Foto { get; set; }
+        public string? Foto { get; set; }
         public bool Aktif  { get; set; }
 
-       
+       public virtual Kategori? UstKategori { get; set; }
+
+        public virtual ICollection<Kategori> AltKategoriler { get; set; }
 
 
     }
