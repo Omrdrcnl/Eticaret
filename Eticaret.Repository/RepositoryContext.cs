@@ -11,9 +11,13 @@ namespace Eticaret.Repository
 {
     public class RepositoryContext : DbContext
     {
-        public RepositoryContext(DbContextOptions options): base(options) { }
+        public RepositoryContext(DbContextOptions options) : base(options)
+        {
+            this.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+        }
 
         public DbSet<Kategori> Kategoriler { get; set; }
+        public DbSet<KategoriAnasayfa> AnasayfaKategoriler { get; set; }
         public DbSet<Kullanici> Kullanicilar { get; set; }
         public DbSet<Rol> Roller { get; set; }
     }

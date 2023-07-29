@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Eticaret.Model
 {
-    [Table("Kullanici")]
+    [Table("tblKullanici")]
     public class Kullanici
     {
         public int Id { get; set; }

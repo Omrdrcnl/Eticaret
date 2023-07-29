@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Eticaret.Model;
+using Eticaret.Repository;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
+using System.Text.Json.Nodes;
 
 namespace Eticaret.Api.Controllers
 {
@@ -7,5 +11,74 @@ namespace Eticaret.Api.Controllers
     [ApiController]
     public class RolController : ControllerBase
     {
+        private RepositoryWrapper repo;
+
+        public RolController(RepositoryWrapper repo)
+        {
+            this.repo = repo;
+        }
+
+        [HttpGet("tumRoller")]
+        public dynamic TumRoller()
+        {
+            List<Rol> items = repo.RolRepository.FindAll().ToList<Rol>();
+            return new
+            {
+                success = true,
+                item = items
+            };
+        }
+
+        [HttpPost("Kaydet")]
+        public dynamic Kaydet([FromBody] dynamic model)
+        {
+            dynamic json = JObject.Parse(model.GetRawText());
+
+            Rol item = new Rol()
+            {
+                Id = json.Id,
+                Ad = json.Ad
+            };
+            if(string.IsNullOrEmpty(json.Ad))
+            {
+                return new
+                {
+                    success = false,
+                    message = "Ad alanı boş geçilemez"
+                };
+            }
+
+            if (item.Id > 0)
+            {
+                repo.RolRepository.Update(item);
+            }
+            else
+            {
+                repo.RolRepository.Create(item);
+            }
+
+            repo.SaveChanges();
+
+            return new
+            {
+                success = true,
+            };
+        }
+
+        [HttpDelete("Id")]
+        public dynamic Delete(int id)
+        {
+            if(id < 0)
+            {
+                return new
+                {
+                    success = false,
+                    message = "Geçersiz Id"
+                };
+            }
+            repo.RolRepository.RolSil(id);
+            return new
+            { success = true };
+        }
     }
 }

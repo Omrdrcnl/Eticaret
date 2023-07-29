@@ -14,7 +14,7 @@ namespace Eticaret.Model
             Kullanicilar = new HashSet<Kullanici>();
         }
         public int Id { get; set; } 
-        public string Name { get; set; }
+        public string Ad { get; set; }
 
         
         public virtual ICollection<Kullanici> Kullanicilar { get; set; }

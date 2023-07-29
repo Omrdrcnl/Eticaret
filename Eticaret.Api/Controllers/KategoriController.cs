@@ -9,22 +9,81 @@ namespace Eticaret.Api.Controllers
     [ApiController]
     public class KategoriController : ControllerBase
     {
-        private KategoriRepository repository;
+        private RepositoryWrapper repo;
 
-        public KategoriController(KategoriRepository repository)
+        public KategoriController(RepositoryWrapper repo)
         {
-            this.repository = repository;
+            this.repo = repo;
         }
+
+
+        //public KategoriController(KategoriRepository repository)
+        //{
+        //    this.repository = repository;
+        //}
 
         [HttpGet("TumKategoriler")]
         public dynamic TumKategoriler()
         {
-            List<Kategori> items = repository.FindAll().ToList<Kategori>();
+            List<Kategori> items = repo.KategoriRepository.FindAll().ToList<Kategori>();
             return new
             {
-                sucess = true,
+                success = true,
                 data = items
             };
         }
-    }
+        [HttpGet("{Id}")]
+        public dynamic Get(int Id)
+        {
+            Kategori item = repo.KategoriRepository.FindByConditiation(a => a.Id == Id).SingleOrDefault<Kategori>();
+            return new
+            {
+                success = true,
+                data = item
+            };
+        }
+
+       
+        [HttpGet("AnasayfaKategoriler")]
+        public dynamic AnasayfaKategoriler()
+        {
+            List<Kategori> items = repo.KategoriRepository.AnaSayfaKategorileriniGetir();
+            return new
+            {
+                success = true,
+                data = items
+            };
+        }
+
+        [HttpGet("UstKategoriler")]
+        public dynamic UstKategoriler()
+        {
+            Kategori item = repo.KategoriRepository.FindByConditiation(a => a.Id == null).SingleOrDefault<Kategori>();
+            return new
+            {
+                success = true,
+                data = item
+            };
+        }
+        //[HttpGet("TumKategoriler")]
+        //public dynamic TumKategoriler()
+        //{
+        //    List<Kategori> items = repo.KategoriRepository.FindAll().ToList<Kategori>();
+        //    return new
+        //    {
+        //        success = true,
+        //        data = items
+        //    };
+        //} 
+        //[HttpGet("TumKategoriler")]
+        //public dynamic TumKategoriler()
+        //{
+        //    List<Kategori> items = repo.KategoriRepository.FindAll().ToList<Kategori>();
+        //    return new
+        //    {
+        //        success = true,
+        //        data = items
+        //    };
+        //}
+    };
 }
