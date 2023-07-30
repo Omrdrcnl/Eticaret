@@ -1,5 +1,6 @@
 ﻿using Eticaret.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Eticaret.Api.Controllers
 {
@@ -8,9 +9,12 @@ namespace Eticaret.Api.Controllers
     public class BaseController : ControllerBase
     {
         protected RepositoryWrapper repo;
-        public BaseController(RepositoryWrapper repo)
+        //Cache ekleme
+        protected IMemoryCache cache;
+        public BaseController(RepositoryWrapper repo, IMemoryCache cache)
         {
             this.repo = repo;
+            this.cache = cache;
         }
     }
 }

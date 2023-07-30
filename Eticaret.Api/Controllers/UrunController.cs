@@ -4,30 +4,34 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json.Linq;
-using System.Text.Json.Nodes;
+using System.Linq;
 
 namespace Eticaret.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RolController : BaseController
+    public class UrunController : BaseController
     {
         private RepositoryWrapper repo;
-
-        public RolController(RepositoryWrapper repo, IMemoryCache cache) :base(repo, cache)
+        
+        public UrunController(RepositoryWrapper repo, IMemoryCache cache) : base(repo, cache)
         {
             this.repo = repo;
+            
         }
 
-        [HttpGet("tumRoller")]
-        public dynamic TumRoller()
+        [HttpGet("TumUrunler/{kategoriId}")]
+        public dynamic TumUrunler(int kategoriId)
         {
-            List<Rol> items = repo.RolRepository.FindAll().ToList<Rol>();
+            List<Urun> items = repo.UrunRepository.UrunKategorileriniGetir(kategoriId);
+
+
             return new
             {
                 success = true,
-                item = items
+                data = items
             };
+
         }
 
         [HttpPost("Kaydet")]
@@ -35,40 +39,39 @@ namespace Eticaret.Api.Controllers
         {
             dynamic json = JObject.Parse(model.GetRawText());
 
-            Rol item = new Rol()
+            Urun urun = new Urun()
             {
+                Ad = json.Ad,
+                Aciklama = json.Aciklama,
+                Adet = json.Adet,
                 Id = json.Id,
-                Ad = json.Ad
+                Fiyat = json.Fiyat,
             };
-            if(string.IsNullOrEmpty(json.Ad))
+            
+            if(urun.Id > 5)
             {
-                return new
-                {
-                    success = false,
-                    message = "Ad alanı boş geçilemez"
-                };
-            }
-
-            if (item.Id > 0)
-            {
-                repo.RolRepository.Update(item);
+                repo.UrunRepository.Update(urun);
             }
             else
             {
-                repo.RolRepository.Create(item);
+                foreach(var kategoriId in json.Kategoriler)
+                {
+                    urun.UrunKategoriler.Add(new UrunKategori() { KategoriId = kategoriId });
+                }
+                repo.UrunRepository.Create(urun);
             }
-
             repo.SaveChanges();
 
             return new
             {
-                success = true,
+                success = true
             };
         }
 
-        [HttpDelete("Id")]
+        [HttpDelete("{id}")]
         public dynamic Delete(int id)
         {
+            repo.UrunRepository.Sil(id);
             if(id < 0)
             {
                 return new
@@ -77,9 +80,12 @@ namespace Eticaret.Api.Controllers
                     message = "Geçersiz Id"
                 };
             }
-            repo.RolRepository.RolSil(id);
             return new
-            { success = true };
+            {
+                success = true,
+            };
         }
+
+      
     }
 }

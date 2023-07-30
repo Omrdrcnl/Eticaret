@@ -13,6 +13,7 @@ namespace Eticaret.Repository
         private KategoriRepository kategoriRepository;
         private KullaniciRepository kullaniciRepository;
         private RolRepository rolRepository;
+        private UrunRepository urunRepository;
 
         public RepositoryWrapper(RepositoryContext context)
         {
@@ -25,7 +26,7 @@ namespace Eticaret.Repository
                 
                     kategoriRepository = new KategoriRepository(context);
                     return kategoriRepository;
-                }
+                }  
         }  
 
         public KullaniciRepository KullaniciRepository
@@ -47,6 +48,15 @@ namespace Eticaret.Repository
                 return rolRepository;
             }
         }
+        public UrunRepository UrunRepository
+        {
+            get
+            {
+                if (urunRepository == null)
+                    urunRepository = new UrunRepository(context);
+                return urunRepository;
+            }
+        }
 
         //public KullaniciRepository kullaniciRepository
         //{ 
@@ -55,7 +65,7 @@ namespace Eticaret.Repository
         //            kullaniciRepository = new KullaniciRepository(context);
         //            return kullaniciRepository;
         //        }
-          
+
 
 
         public void SaveChanges()

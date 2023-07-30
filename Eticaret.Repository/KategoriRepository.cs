@@ -11,6 +11,8 @@ namespace Eticaret.Repository
     public class KategoriRepository : RepositoryBase<Kategori>
     {
         public KategoriRepository(RepositoryContext context) : base(context) { }
+
+
         public List<Kategori> AnaSayfaKategorileriniGetir()
         {
             List<Kategori> anasayfaKategoriler = (from k in RepositoryContext.Kategoriler.Include(a => a.UstKategori) join a in RepositoryContext.AnasayfaKategoriler

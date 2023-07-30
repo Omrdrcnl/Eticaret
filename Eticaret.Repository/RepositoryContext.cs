@@ -20,5 +20,7 @@ namespace Eticaret.Repository
         public DbSet<KategoriAnasayfa> AnasayfaKategoriler { get; set; }
         public DbSet<Kullanici> Kullanicilar { get; set; }
         public DbSet<Rol> Roller { get; set; }
+        public DbSet<Urun> Urunler { get; set; }
+        public DbSet<UrunKategori> UrunKategoriler { get; set; }
     }
 }

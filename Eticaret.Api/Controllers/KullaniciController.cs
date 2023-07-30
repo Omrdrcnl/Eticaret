@@ -3,6 +3,7 @@ using Eticaret.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json.Linq;
 
 namespace Eticaret.Api.Controllers
@@ -14,13 +15,13 @@ namespace Eticaret.Api.Controllers
 
         private RepositoryWrapper repo;
 
-        public KullaniciController(RepositoryWrapper repo) : base(repo)
+        public KullaniciController(RepositoryWrapper repo, IMemoryCache cache) : base(repo,cache)
         {
             this.repo = repo;
         }
 
-        [HttpPost("kullaniciGetir")]
-        public dynamic KullaniciGetir([FromBody] dynamic model)
+        [HttpPost("Getir")]
+        public dynamic Getir([FromBody] dynamic model)
         {
             dynamic json = JObject.Parse(model.GetRawText());
 

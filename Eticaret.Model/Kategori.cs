@@ -5,6 +5,10 @@ namespace Eticaret.Model
     [Table("tblKategori")]
     public class Kategori
     {
+        public Kategori() {
+            Urunler = new HashSet<Urun>();
+        }
+
         public int Id { get; set; }
         public string Ad { get; set; }
         public int? UstKategoriId { get; set; }
@@ -15,6 +19,7 @@ namespace Eticaret.Model
        public virtual Kategori? UstKategori { get; set; }
 
         public virtual ICollection<Kategori> AltKategoriler { get; set; }
+        public virtual ICollection<Urun> Urunler { get; set; }
 
 
     }
