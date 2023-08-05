@@ -35,7 +35,7 @@ namespace Eticaret.Repository
             {
                 if(kullaniciRepository == null)
                     kullaniciRepository = new KullaniciRepository(context);
-                return KullaniciRepository;
+                return kullaniciRepository;
             }
         }
 

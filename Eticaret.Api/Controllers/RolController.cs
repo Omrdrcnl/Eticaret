@@ -1,5 +1,6 @@
 ﻿using Eticaret.Model;
 using Eticaret.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
@@ -8,6 +9,7 @@ using System.Text.Json.Nodes;
 
 namespace Eticaret.Api.Controllers
 {
+    [Authorize(Roles ="Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class RolController : BaseController

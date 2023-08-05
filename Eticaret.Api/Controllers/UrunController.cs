@@ -1,5 +1,6 @@
 ﻿using Eticaret.Model;
 using Eticaret.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
@@ -34,6 +35,7 @@ namespace Eticaret.Api.Controllers
 
         }
 
+        [Authorize(Roles ="Admin,Personel")]
         [HttpPost("Kaydet")]
         public dynamic Kaydet([FromBody] dynamic model)
         {

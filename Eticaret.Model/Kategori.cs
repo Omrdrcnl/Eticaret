@@ -6,7 +6,8 @@ namespace Eticaret.Model
     public class Kategori
     {
         public Kategori() {
-            Urunler = new HashSet<Urun>();
+
+            AltKategoriler = new HashSet<Kategori>();
         }
 
         public int Id { get; set; }
