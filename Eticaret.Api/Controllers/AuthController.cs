@@ -41,7 +41,7 @@ namespace Eticaret.Api.Controllers
 
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
-                    Expires = DateTime.UtcNow.AddMinutes(10),
+                    Expires = DateTime.UtcNow.AddMinutes(10000),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature),
                     Claims = claims
                 };
@@ -50,7 +50,8 @@ namespace Eticaret.Api.Controllers
                 return new
                 {
                     success = true,
-                    data = tokenHandler.WriteToken(token)
+                    data = tokenHandler.WriteToken(token),
+                    rol = rol?.Ad
                 };
             }
             else

@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Login</h1>
+
+@using (Html.BeginForm("GirisYap", "Account"))
+{
+    <div class="mb-3">
+        <label for="inputEmail" class="form-label">Email address</label>
+        <input type="email" class="form-control" id="inputEmail" placeholder="name@example.com" name="KullaniciAdi">
+    </div>
+    <div class="mb-3">
+        <label for="inputPassword" class="form-label">Password</label>
+        <input type="password" class="form-control" id="inputPassword" name="Sifre">
+    </div>
+    <button type="submit" class="btn btn-success">Giriş Yap</button>
+}

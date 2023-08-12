@@ -17,7 +17,7 @@ namespace Eticaret.Model
         public string? Foto { get; set; }
         public bool Aktif  { get; set; }
 
-       public virtual Kategori? UstKategori { get; set; }
+        public virtual Kategori? UstKategori { get; set; }
 
         public virtual ICollection<Kategori> AltKategoriler { get; set; }
         public virtual ICollection<Urun> Urunler { get; set; }

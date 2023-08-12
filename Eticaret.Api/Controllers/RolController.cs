@@ -9,7 +9,7 @@ using System.Text.Json.Nodes;
 
 namespace Eticaret.Api.Controllers
 {
-    [Authorize(Roles ="Admin")]
+    //[Authorize(Roles ="Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class RolController : BaseController
@@ -21,7 +21,7 @@ namespace Eticaret.Api.Controllers
             this.repo = repo;
         }
 
-        [HttpGet("tumRoller")]
+        [HttpGet("TumRoller")]
         public dynamic TumRoller()
         {
             List<Rol> items = repo.RolRepository.FindAll().ToList<Rol>();
@@ -68,20 +68,23 @@ namespace Eticaret.Api.Controllers
             };
         }
 
-        [HttpDelete("Id")]
-        public dynamic Delete(int id)
+        [HttpDelete("Sil")]
+        public dynamic Sil(int id)
         {
-            if(id < 0)
+            if (id <= 0)
             {
                 return new
                 {
                     success = false,
-                    message = "Geçersiz Id"
+                    message = "Geçersiz id"
                 };
             }
+
             repo.RolRepository.RolSil(id);
             return new
-            { success = true };
+            {
+                success = true
+            };
         }
     }
 }
